@@ -1,4 +1,4 @@
-import web_app.py
+import web_app
 
 # POST logic
 @app.route('/data/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
