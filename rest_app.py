@@ -1,4 +1,5 @@
 import web_app
+from flask import request
 
 # POST logic
 @app.route('/data/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
