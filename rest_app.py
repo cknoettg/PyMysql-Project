@@ -3,10 +3,14 @@ import db_connector
 from flask import request
 
 # POST logic
-@app.route('/data/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
-def user(user_id):
+@app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
+def user(user_name):
     if request.method == 'GET':
-        return {'user_id': user_id}
+        try:
+            return {"status": "ok", "user_name": user_name}, 200
+        except Exception as e:
+            return 500
+
 
     elif request.method == 'POST':
         # getting the json data payload from request
