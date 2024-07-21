@@ -15,10 +15,22 @@ def user(user_name):
     # POST logic
     elif request.method == 'POST':
         try:
-            # getting the json data payload from request
+            # Getting the json data payload from request
             request_data = request.json
-            # treating request_data as a dictionary to get a specific value from key
-            user_name = request_data.get("user_name")
+
+            # Formatting the POST request
+            user_id = request_data['user_id']
+            user_name = request_data['user_name']
+            creation_date = request_data['creation_date']
+
+            # Treating request_data as a dictionary to get a specific value from key
+            # user_name = request_data.get("user_name")
+
+            # Create cursor, then execute the POST SQL statement
+            cursor = db_connector.conn.cursor()
+            cursor.execute(f'INSERT INTO mydb.users (user_id, user_name, creation_date) VALUES (%s, %s, %s)',
+                           (user_id, user_name, creation_date))
+
             return {"status": "ok", "user_added": user_name}, 200
         except Exception as e:
             return {"status": "error", "reason": "id already exists"}, 500
