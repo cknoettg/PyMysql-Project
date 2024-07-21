@@ -33,8 +33,21 @@ def user(user_name):
 
             cursor = db_connector.conn.cursor()
             cursor.execute(update_query, (new_user_name, user_id))
+            cursor.close()
+            db_connector.conn.close()
             return {"status": "ok", "user_updated": user_name}, 200
         except Exception as e:
             return {"status": "ok", "reason": "no such id"}, 500
 
-# DELETE logic
+    # DELETE logic
+    elif request.method == 'DELETE':
+        try:
+            cursor = db_connector.conn.cursor()
+
+            cursor.execute(f"DELETE FROM mydb.users WHERE name = 'john'")
+
+            cursor.close()
+            db_connector.conn.close()
+            return {"status": "ok", "user_deleted": user_id}, 200
+        except Exception as e:
+            return {"status": "error", "reason": "no such id"}, 500
