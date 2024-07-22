@@ -22,7 +22,7 @@ def user(user_id):
             db_connector.conn.close()
             return {"status": "ok", "user_name": user_name}, 200
         except Exception as e:
-            return 500
+            return {"status": "error", "reason": "no such id"}, 500
 
     # POST logic
     elif request.method == 'POST':
