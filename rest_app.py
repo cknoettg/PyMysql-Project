@@ -3,7 +3,6 @@ import db_connector
 import requests
 from flask import Flask, request
 
-
 # Create route for each REST API method
 @web_app.app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):
