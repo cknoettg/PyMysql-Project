@@ -1,20 +1,24 @@
 import web_app
 import db_connector
 import requests
-from flask import Flask, request, app
+from flask import Flask, request
 
 
 # Create route for each REST API method
-@app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
-def user(user_name):
+@web_app.app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
+def user(user_id):
     # GET logic
     if request.method == 'GET':
         try:
+            # fetch data from path
             res = requests.get('http://127.0.0.1:5000/users/{user_id}')
             request_data = res.json
             user_id = request_data['user_id']
+            user_name = request_data['user_name']
+            # connect to db and execute SQL statement
             cursor = db_connector.conn.cursor()
             cursor.execute(f"SELECT user_name FROM mydb.users WHERE id = {user_id}")
+            # close the connection
             cursor.close()
             db_connector.conn.close()
             return {"status": "ok", "user_name": user_name}, 200
@@ -47,13 +51,23 @@ def user(user_name):
     # PUT logic
     elif request.method == 'PUT':
         try:
+            # trying with a singular case first
             user_id = 1
             new_user_name = "George"
 
-            update_query = f"UPDATE users SET user_name = %s WHERE = %s"
+            #fetch user name and id
+            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
+            request_data = res.json
+            user_id = request_data['user_id']
+            user_name = request_data['user_name']
 
+            # SQL statement to UPDATE
+            update_query = f"UPDATE users SET user_name = %s WHERE user_id = %s"
+
+            # connect to db and execute the SQL statement
             cursor = db_connector.conn.cursor()
             cursor.execute(update_query, (new_user_name, user_id))
+            # close the connection
             cursor.close()
             db_connector.conn.close()
             return {"status": "ok", "user_updated": user_name}, 200
@@ -63,14 +77,16 @@ def user(user_name):
     # DELETE logic
     elif request.method == 'DELETE':
         try:
+            # get user id and user name to delete
             res = requests.get('http://127.0.0.1:5000/users/{user_id}')
             request_data = res.json
             user_id = request_data['user_id']
             user_name = request_data['user_name']
+
+            # connect to DB and execute SQL statement
             cursor = db_connector.conn.cursor()
-
             cursor.execute(f"DELETE FROM mydb.users WHERE name = 'user_name'")
-
+            # close the connection
             cursor.close()
             db_connector.conn.close()
             return {"status": "ok", "user_deleted": user_id}, 200
