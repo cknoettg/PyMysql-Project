@@ -1,7 +1,8 @@
 import web_app
 import db_connector
 import requests
-from flask import request
+from flask import Flask, request, app
+
 
 # Create route for each REST API method
 @app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
@@ -9,7 +10,7 @@ def user(user_name):
     # GET logic
     if request.method == 'GET':
         try:
-            res = requests.get('http://127.0.0.1:5000/data/{user_id}')
+            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
             request_data = res.json
             user_id = request_data['user_id']
             cursor = db_connector.conn.cursor()
@@ -62,7 +63,7 @@ def user(user_name):
     # DELETE logic
     elif request.method == 'DELETE':
         try:
-            res = requests.get('http://127.0.0.1:5000/data/{user_id}')
+            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
             request_data = res.json
             user_id = request_data['user_id']
             user_name = request_data['user_name']
