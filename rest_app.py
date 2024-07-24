@@ -1,10 +1,12 @@
-import web_app
-import db_connector
+#import web_app
+#import db_connector
 import requests
 from flask import Flask, request
 
+app = Flask(__name__)
+
 # Create route for each REST API method
-@web_app.app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
+@app.route('/users/<user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):
     # GET logic
     if request.method == 'GET':
@@ -91,3 +93,5 @@ def user(user_id):
             return {"status": "ok", "user_deleted": user_id}, 200
         except Exception as e:
             return {"status": "error", "reason": "no such id"}, 500
+
+app.run(host='127.0.0.1', debug=True, port=5000)
