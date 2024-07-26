@@ -14,10 +14,9 @@ def user(user_id):
     if request.method == 'GET':
         try:
             # fetch data from path
-            #res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            #request_data = res.json
-            #user_id = request_data['user_id']
-            #user_name = request_data['user_name']
+            request_data = request.json
+            user_id = request_data['user_id']
+            user_name = request_data['user_name']
 
             #trying with a singular case first
             get_user(2)
@@ -54,6 +53,12 @@ def user(user_id):
             #user_id = 1
             #new_user_name = "George"
 
+            # fetch user name and id
+            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
+            request_data = res.json
+            user_id = request_data['user_id']
+            user_name = request_data['user_name']
+
             update_user("john")
 
             return {"status": "ok", "user_updated": user_name}, 200
@@ -63,8 +68,15 @@ def user(user_id):
     # DELETE logic
     elif request.method == 'DELETE':
         try:
+            # get user id and user name to delete
+            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
+            request_data = res.json
+            user_id = request_data['user_id']
+            user_name = request_data['user_name']
+
+            # trying with singular case first
             delete_user("George")
-            
+
             return {"status": "ok", "user_deleted": user_id}, 200
         except Exception as e:
             return {"status": "error", "reason": "no such id"}, 500
