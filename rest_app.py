@@ -1,7 +1,9 @@
 #import web_app
 #import db_connector
 import requests
+from datetime import datetime
 from flask import Flask, request
+from db_connector import add_user, get_user, update_user, delete_user
 
 app = Flask(__name__)
 
@@ -12,16 +14,14 @@ def user(user_id):
     if request.method == 'GET':
         try:
             # fetch data from path
-            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            request_data = res.json
-            user_id = request_data['user_id']
-            user_name = request_data['user_name']
-            # connect to db and execute SQL statement
-            cursor = db_connector.conn.cursor()
-            cursor.execute(f"SELECT user_name FROM mydb.users WHERE id = {user_id}")
-            # close the connection
-            cursor.close()
-            db_connector.conn.close()
+            #res = requests.get('http://127.0.0.1:5000/users/{user_id}')
+            #request_data = res.json
+            #user_id = request_data['user_id']
+            #user_name = request_data['user_name']
+
+            #trying with a singular case first
+            get_user(2)
+
             return {"status": "ok", "user_name": user_name}, 200
         except Exception as e:
             return {"status": "error", "reason": "no such id"}, 500
@@ -40,10 +40,8 @@ def user(user_id):
             # Treating request_data as a dictionary to get a specific value from key
             # user_name = request_data.get("user_name")
 
-            # Create cursor, then execute the POST SQL statement
-            cursor = db_connector.conn.cursor()
-            cursor.execute(f'INSERT INTO mydb.users (user_id, user_name, creation_date) VALUES (%s, %s, %s)',
-                           (user_id, user_name, creation_date))
+            #trying with a singular case first
+            add_user(1, "john", datetime.now())
 
             return {"status": "ok", "user_added": user_name}, 200
         except Exception as e:
@@ -53,24 +51,11 @@ def user(user_id):
     elif request.method == 'PUT':
         try:
             # trying with a singular case first
-            user_id = 1
-            new_user_name = "George"
+            #user_id = 1
+            #new_user_name = "George"
 
-            #fetch user name and id
-            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            request_data = res.json
-            user_id = request_data['user_id']
-            user_name = request_data['user_name']
+            update_user("john")
 
-            # SQL statement to UPDATE
-            update_query = f"UPDATE users SET user_name = %s WHERE user_id = %s"
-
-            # connect to db and execute the SQL statement
-            cursor = db_connector.conn.cursor()
-            cursor.execute(update_query, (new_user_name, user_id))
-            # close the connection
-            cursor.close()
-            db_connector.conn.close()
             return {"status": "ok", "user_updated": user_name}, 200
         except Exception as e:
             return {"status": "ok", "reason": "no such id"}, 500
@@ -78,18 +63,8 @@ def user(user_id):
     # DELETE logic
     elif request.method == 'DELETE':
         try:
-            # get user id and user name to delete
-            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            request_data = res.json
-            user_id = request_data['user_id']
-            user_name = request_data['user_name']
-
-            # connect to DB and execute SQL statement
-            cursor = db_connector.conn.cursor()
-            cursor.execute(f"DELETE FROM mydb.users WHERE name = 'user_name'")
-            # close the connection
-            cursor.close()
-            db_connector.conn.close()
+            delete_user("George")
+            
             return {"status": "ok", "user_deleted": user_id}, 200
         except Exception as e:
             return {"status": "error", "reason": "no such id"}, 500

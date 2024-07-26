@@ -30,7 +30,7 @@ def get_user(user_id):
     conn.close()
 
 # SQL logic for PUT request
-def update_user():
+def update_user(user_name):
     # trying with a singular case first
     user_id = 1
     new_user_name = "George"
