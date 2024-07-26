@@ -29,13 +29,14 @@ def get_user(user_id):
     cursor.close()
     conn.close()
 
+# SQL logic for PUT request
 def update_user():
     # trying with a singular case first
     user_id = 1
     new_user_name = "George"
 
     # SQL statement to UPDATE
-    update_query = f"UPDATE users SET user_name = %s WHERE user_id = %s"
+    update_query = f"UPDATE {schema_name}.users SET user_name = %s WHERE user_id = %s"
 
     # Getting a cursor from Database
     cursor = conn.cursor()
@@ -43,5 +44,14 @@ def update_user():
     cursor.execute(update_query, (new_user_name, user_id))
 
     # Close the connection
+    cursor.close()
+    conn.close()
+
+# SQL logic for DELETE request
+def delete_user(user_name):
+    # connect to DB and execute SQL statement
+    cursor = conn.cursor()
+    cursor.execute(f"DELETE FROM {schema_name}.users WHERE name = user_name")
+    # close the connection
     cursor.close()
     conn.close()
