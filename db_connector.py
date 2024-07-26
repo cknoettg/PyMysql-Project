@@ -23,7 +23,24 @@ def get_user(user_id):
     # Getting a cursor from Database
     cursor = conn.cursor()
 
-    cursor.execute(f"SELECT user_name FROM mydb.users WHERE id = {user_id}")
+    cursor.execute(f"SELECT user_name FROM {schema_name}.users WHERE id = {user_id}")
+
+    # Close the connection
+    cursor.close()
+    conn.close()
+
+def update_user():
+    # trying with a singular case first
+    user_id = 1
+    new_user_name = "George"
+
+    # SQL statement to UPDATE
+    update_query = f"UPDATE users SET user_name = %s WHERE user_id = %s"
+
+    # Getting a cursor from Database
+    cursor = conn.cursor()
+
+    cursor.execute(update_query, (new_user_name, user_id))
 
     # Close the connection
     cursor.close()
