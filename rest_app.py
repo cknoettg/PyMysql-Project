@@ -18,8 +18,8 @@ def user(user_id):
             user_id = request_data['user_id']
             user_name = request_data['user_name']
 
-            #trying with a singular case first
-            get_user(2)
+            # fetch user
+            get_user(user_id)
 
             return {"status": "ok", "user_name": user_name}, 200
         except Exception as e:
