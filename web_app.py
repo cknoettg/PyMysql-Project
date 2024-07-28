@@ -8,7 +8,7 @@ app = Flask(__name__)
 def get_user_name(user_id):
         user_name = get_user(user_id)
         if user_name == None:
-                return "<H1 id='error'> no such user: + user_id + </H1>"
+                return "<H1 id='error'> no such user: " + user_id + "</H1>"
         else:
                 return "<H1 id='user'>" + user_name + "</H1>"
 
