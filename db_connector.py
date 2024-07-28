@@ -23,7 +23,7 @@ def get_user(user_id):
     # Getting a cursor from Database
     cursor = conn.cursor()
 
-    cursor.execute(f"SELECT user_name FROM {schema_name}.users WHERE id = {user_id}")
+    cursor.execute(f"SELECT user_name FROM {schema_name}.users WHERE user_id = {user_id}")
 
     # Close the connection
     cursor.close()
