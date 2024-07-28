@@ -24,10 +24,11 @@ def get_user(user_id):
     cursor = conn.cursor()
 
     cursor.execute(f"SELECT user_name FROM {schema_name}.users WHERE user_id = {user_id}")
-
+    user_name = cursor.fetchone()[0]
     # Close the connection
     cursor.close()
     conn.close()
+    return user_name
 
 # SQL logic for PUT request
 def update_user(user_name):
