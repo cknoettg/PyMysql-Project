@@ -36,11 +36,16 @@ def user(user_id):
             user_name = request_data['user_name']
             creation_date = request_data['creation_date']
 
+            # test to see if correct data was sent - worked
+            # print(request_data)
             # Treating request_data as a dictionary to get a specific value from key
             # user_name = request_data.get("user_name")
 
-            #trying with a singular case first
-            add_user(1, "john", datetime.now())
+            # trying with a singular case first - worked
+            # add_user(1, "john", datetime.now())
+
+            # Genericizing the request
+            add_user(user_id, user_name, creation_date)
 
             return {"status": "ok", "user_added": user_name}, 200
         except Exception as e:

@@ -12,8 +12,8 @@ def add_user(user_id, user_name, creation_date):
     # Getting a cursor from Database
     cursor = conn.cursor()
 
-    cursor.execute(f"INSERT into {schema_name}.users (user_id, user_name, creation_date) VALUES ('{user_id}, {user_name}, {creation_date}')")
-
+    cursor.execute(f'INSERT INTO {schema_name}.users (user_id, user_name, creation_date) VALUES (%s, %s, %s)',
+                   (user_id, user_name, creation_date))
     # Close the connection
     cursor.close()
     conn.close()
