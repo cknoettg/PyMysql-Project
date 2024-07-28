@@ -59,10 +59,12 @@ def user(user_id):
             #new_user_name = "George"
 
             # fetch user name and id
-            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            request_data = res.json
+            request_data = request.json
             user_id = request_data['user_id']
             user_name = request_data['user_name']
+
+            # test to see if output is right - works
+            # print(request_data)
 
             update_user("john")
 
