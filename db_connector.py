@@ -52,7 +52,7 @@ def update_user(user_name):
 def delete_user(user_name):
     # connect to DB and execute SQL statement
     cursor = conn.cursor()
-    cursor.execute(f"DELETE FROM {schema_name}.users WHERE name = user_name")
+    cursor.execute(f"DELETE FROM {schema_name}.users WHERE user_name = user_name")
     # close the connection
     cursor.close()
     conn.close()

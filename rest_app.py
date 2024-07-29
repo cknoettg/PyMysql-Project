@@ -76,8 +76,7 @@ def user(user_id):
     elif request.method == 'DELETE':
         try:
             # get user id and user name to delete
-            res = requests.get('http://127.0.0.1:5000/users/{user_id}')
-            request_data = res.json
+            request_data = request.json
             user_id = request_data['user_id']
             user_name = request_data['user_name']
 
