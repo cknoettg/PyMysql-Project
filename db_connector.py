@@ -2,6 +2,7 @@ import pymysql
 
 schema_name = "mydb"
 
+#NOTE: removed connection close statements to allow submitting multiple REST requests
 
 # Establish a connection to DB
 conn = pymysql.connect(host='127.0.0.1', port=3378, user='user', passwd='password', db=schema_name)
@@ -17,7 +18,7 @@ def add_user(user_id, user_name, creation_date):
                    (user_id, user_name, creation_date))
     # Close the connection
     cursor.close()
-    conn.close()
+    #conn.close()
 
 # SQL logic for GET request
 def get_user(user_id):
@@ -28,7 +29,7 @@ def get_user(user_id):
     user_name = cursor.fetchone()[0]
     # Close the connection
     cursor.close()
-    conn.close()
+    #conn.close()
     return user_name
 
 # SQL logic for PUT request
@@ -47,13 +48,13 @@ def update_user(user_name):
 
     # Close the connection
     cursor.close()
-    conn.close()
+    #conn.close()
 
 # SQL logic for DELETE request
 def delete_user(user_name):
     # connect to DB and execute SQL statement
     cursor = conn.cursor()
     cursor.execute(f"DELETE FROM {schema_name}.users WHERE user_name = {user_name}")
-    # close the connection
+    # Close the connection
     cursor.close()
-    conn.close()
+    #conn.close()
