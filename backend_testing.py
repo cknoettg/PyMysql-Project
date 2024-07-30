@@ -1,6 +1,8 @@
 import requests
 import pymysql
 
+schema_name = "mydb"
+
 # Define the REST API URL
 api_url = "http://127.0.0.1:5000/users/<user_id>"
 
