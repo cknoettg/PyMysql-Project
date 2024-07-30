@@ -28,3 +28,14 @@ user_id = response.json().get("user_id")
 get_response = requests.get(api_url)
 if get_response.status_code != 200:
     raise Exception("Test failed: GET request failed")
+
+# Establish a connection to DB
+conn = pymysql.connect(host='127.0.0.1', port=3378, user='user', passwd='password', db=schema_name)
+conn.autocommit(True)
+
+cursor = conn.cursor()
+cursor.execute("SELECT COUNT(*) FROM users WHERE user_name = %s", ("thomas",))
+count = cursor.fetchone()[0]
+if count == 0:
+    raise Exception("Test failed: Data not found in database")
+
