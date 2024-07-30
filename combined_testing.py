@@ -39,3 +39,15 @@ count = cursor.fetchone()[0]
 if count == 0:
     raise Exception("Test failed: Data not found in database")
 
+# Selenium test
+driver = webdriver.Chrome()
+driver.get("http://127.0.0.1:5000/users/get_user_name/4")
+user_name_element = driver.find_element(By.ID, value="user")
+displayed_user_name = user_name_element.text
+expected_user_name = new_user_data["user_name"]
+if displayed_user_name != expected_user_name:
+    raise Exception(f"Test failed: User name mismatch (expected: {expected_user_name}, found: {displayed_user_name})")
+
+conn.close()
+
+print("All tests passed! User data is consistent.")
