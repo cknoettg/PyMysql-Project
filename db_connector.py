@@ -3,7 +3,7 @@ import pymysql
 schema_name = "mydb"
 
 
-# Establishing a connection to DB
+# Establish a connection to DB
 conn = pymysql.connect(host='127.0.0.1', port=3378, user='user', passwd='password', db=schema_name)
 conn.autocommit(True)
 
